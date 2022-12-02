@@ -2,7 +2,14 @@
 
 input = File.readlines("inputs/02.txt")
 
-MAPPING = {
+def game_score(opponent, you)
+  score = 0
+  score += 3 if you == opponent
+  score += 6 if (you - opponent) % 3 == 1
+  score
+end
+
+PART_1_MAPPING = {
   'A' => 1,
   'B' => 2,
   'C' => 3,
@@ -11,18 +18,8 @@ MAPPING = {
   'Z' => 3
 }
 
-def game_score(opponent, you)
-  if (you + opponent == 4) && (you && opponent != 2)
-    6 if you == 1
-  elsif you > opponent
-    6
-  elsif opponent == you
-    3
-  end || 0
-end
-
 rounds = input.map do |round|
-  opponent, you = round.split(' ').map { |sign| MAPPING.fetch(sign) }
+  opponent, you = round.split(' ').map { |sign| PART_1_MAPPING.fetch(sign) }
 
   game_score(opponent, you) + you
 end
@@ -31,26 +28,18 @@ puts "Day02::Part01: #{rounds.sum}"
 
 # ==============================================================================
 
-MAPPING = {
+PART_2_MAPPING = {
   'A' => 1,
   'B' => 2,
   'C' => 3,
-  'X' => :lose,
-  'Y' => :draw,
-  'Z' => :win
+  'X' => -1,
+  'Y' => 0,
+  'Z' => 1
 }
 
 rounds = input.map do |round|
-  opponent, outcome = round.split(' ').map { |sign| MAPPING.fetch(sign) }
-
-  case outcome
-  when :lose
-    you = opponent - 1
-  when :draw
-    you = opponent
-  when :win
-    you = opponent + 1
-  end
+  opponent, outcome = round.split(' ').map { |sign| PART_2_MAPPING.fetch(sign) }
+  you = opponent + outcome
 
   case you
   when 4
