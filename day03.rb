@@ -8,7 +8,7 @@ values = rucksacks.map do |rucksack|
   ord >= 97 ? ord - 96 : ord - 38
 end
 
-puts "Day02::Part01: #{values.sum}"
+puts "Day03::Part01: #{values.sum}"
 
 # ==============================================================================
 
@@ -17,4 +17,4 @@ values = rucksacks.each_slice(3).map do |group|
   ord >= 97 ? ord - 96 : ord - 38
 end
 
-puts "Day02::Part02: #{values.sum}"
+puts "Day03::Part02: #{values.sum}"
