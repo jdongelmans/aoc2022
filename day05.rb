@@ -10,9 +10,10 @@ stacks = stacks.map do |array|
   array
 end
 stacks = stacks.transpose.map { |array| array.reject { |e| e.strip.empty? } }
+moves = moves.split("\n").map { |move| move.scan(/\d+/).map(&:to_i) }
 
 def move(stacks, move)
-  count, from, to = move.scan(/\d+/).map(&:to_i)
+  count, from, to = move
   count.times do
     element = stacks[from - 1].pop
     stacks[to - 1].push(element)
@@ -20,19 +21,19 @@ def move(stacks, move)
 end
 
 part1_stacks = stacks.map(&:dup)
-moves.split("\n").each { |move| move(part1_stacks, move) }
+moves.each { |move| move(part1_stacks, move) }
 
 puts "Day05::Part01: #{part1_stacks.map(&:last).join}"
 
 # ==============================================================================
 
 def move_v2(stacks, move)
-  count, from, to = move.scan(/\d+/).map(&:to_i)
+  count, from, to = move
   elements = stacks[from - 1].pop(count)
   stacks[to - 1].push(*elements)
 end
 
 part2_stacks = stacks.map(&:dup)
-moves.split("\n").each { |move| move_v2(part2_stacks, move) }
+moves.each { |move| move_v2(part2_stacks, move) }
 
 puts "Day05::Part02: #{part2_stacks.map(&:last).join}"
